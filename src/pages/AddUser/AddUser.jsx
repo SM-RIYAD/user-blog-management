@@ -35,7 +35,7 @@ const AddUser = () => {
         } else {
     console.log("")
     const userinfo= {
-        name,password,photo,email,isAdmin:true
+        name,password,photo,email,isAdmin:false
       
       }
     axiosPublic.post("/adduser",userinfo, {
@@ -112,7 +112,7 @@ const AddUser = () => {
                   <span className="label-text">Photo Url</span>
                 </label>
                 <input
-                  type="photo"
+                  type="text"
                   name="photo"
                   placeholder="enter photo url"
                   className="input input-bordered"

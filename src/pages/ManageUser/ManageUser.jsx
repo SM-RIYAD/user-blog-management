@@ -63,7 +63,34 @@ const handleEdit =(e)=>{
 
 }
 
-    
+const handleDelete = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`http://localhost:5000/deleteuser/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.deletedCount > 0) {
+            Swal.fire("Deleted!", "Review has been deleted.", "success");
+            // const remaining = jobs.filter(job => job._id !== id);
+            // setJobs(remaining);
+
+            refetch();
+          }
+        });
+    }
+  });
+};
     return (
         <div className='border '>
             This is manage user
@@ -85,22 +112,24 @@ const handleEdit =(e)=>{
       {/* row 1 */}
       {
 
- users.map((user)=> <tr key={user._id}>
+ users.map((user,idx)=> <tr key={user._id}>
   <th>{user.name}</th>
   <td>{user.email}</td>
   <td>{user.password}</td>
-  <td><button onClick={()=>{}} className='btn btn-xs btn-error text-white'> Delete </button>
+  <td><button   onClick={() => {
+                          handleDelete(user._id);
+                        }} className='btn btn-xs btn-error text-white'> Delete </button>
   
   <button
                         onClick={() => {
-                            document.getElementById("my_modal_1").showModal();
+                            document.getElementById(`${idx}`).showModal();
                         }}
                         className="btn btn-xs btn-error ms-1 text-white"
                       >
                         {" "}
                         Edit{" "}
                       </button>
-                      <dialog id="my_modal_1" className="modal">
+                      <dialog id={`${idx}`} className="modal">
                 {/* <ToastContainer /> */}
                   <div className="modal-box">
                   <form method="dialog">
