@@ -5,6 +5,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import Concern from "./Concern/Concern";
+import BlogSection from "./BlogSection/BlogSection";
 
 const Home = () => {
 
@@ -24,7 +25,7 @@ const Home = () => {
       <div className="">
         <Banner></Banner>
 
-        <Concern></Concern>
+<BlogSection>           </BlogSection>
 
       </div>
     </div>

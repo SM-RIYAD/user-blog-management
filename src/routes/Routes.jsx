@@ -13,6 +13,8 @@ import UserProfile from "../pages/userProfile/UserProfile";
 import Tasks from "../pages/Tasks/Tasks";
 import ManageUser from "../pages/ManageUser/ManageUser";
 import AddUser from "../pages/AddUser/AddUser";
+import NonAdminuser from "../pages/userProfile/nonAdminuser";
+import Addblog from "../pages/AddBlog/Addblog";
 
 
 
@@ -32,6 +34,18 @@ const router = createBrowserRouter([
                 path: '/blog', 
                 element: <Blog/>,
                 
+            },
+  
+            {
+              path: '/addblog', 
+              element: <Addblog/>,
+              
+          },
+            {
+            
+              path: '/userProfile',
+              element: <NonAdminuser/>,
+
             },
             {
                 path: '/opinion', 

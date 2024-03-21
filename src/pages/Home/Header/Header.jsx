@@ -4,14 +4,11 @@ import { useContext } from "react";
 import Swal from "sweetalert2";
 
 const Header = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 console.log("photo url",user?.photoURL); 
   const handleLogout =()=>{
 
-    logOut()
-    .then(result => {
-      console.log(result.user)})
-    .catch(err=>console.log(err));
+    setUser({})
 
   }
   const handleAdminCredentials = () => {
@@ -56,17 +53,17 @@ console.log("photo url",user?.photoURL);
         <NavLink to="/">Home</NavLink>
       </li>
       <li className={`${user ?'pt-10':'pt-5' } `}>
-        <NavLink to="/blog">Add Blog</NavLink>
+        <NavLink to="/addblog">Add Blog</NavLink>
       </li>
       <li className={`${user ?'pt-10':'pt-5' } `}>
           <button className="admin-text" onClick={handleAdminCredentials}> Admin</button>
       </li>
 
       <li className={`${user ?'pt-10':'pt-5' } `}>
-        <NavLink to='/dashboard/profile'>Dashboard</NavLink>
+        <NavLink to='/dashboard/profile'> {`${user?.isAdmin?'Dashboard': ""} `}</NavLink>
       </li>
       <li>
-
+      <Link to='/userProfile'>
           {
 
             user&& <div className=" lg:ms-10  flex items-center flex-col mt-2 gap-2  ">
@@ -79,7 +76,7 @@ console.log("photo url",user?.photoURL);
             <p className="font-bold">{user.name}</p>
           </div>
           }
-
+</Link>
       </li>
     </>
   );
@@ -120,7 +117,7 @@ console.log("photo url",user?.photoURL);
         </div>
         <div className="navbar-end">
   
-          {user?.displayName? (
+          {user?.name? (
          
               <button onClick={handleLogout} className="btn btn-error  border-0 "> Logout</button>
            
