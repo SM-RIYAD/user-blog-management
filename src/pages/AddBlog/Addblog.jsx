@@ -26,26 +26,26 @@ const Addblog = () => {
           };
       
           console.log(" added Blog is  ", newBlog);
-          ///sending product to server
-        //   fetch("https://brand-website-server.vercel.app/addproduct", {
-        //     method: "POST",
-        //     headers: {
-        //       "content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(newBlog),
-        //   })
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //       console.log(data);
-        //       if (data.insertedId) {
-        //         Swal.fire({
-        //           title: "Success!",
-        //           text: "Blog Added Successfully",
-        //           icon: "success",
-        //           confirmButtonText: "Cool",
-        //         });
-        //       }
-        //     });
+         // /sending product to server
+          fetch("http://localhost:5000/addblog", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(newBlog),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.insertedId) {
+                Swal.fire({
+                  title: "Success!",
+                  text: "Blog Added Successfully",
+                  icon: "success",
+                  confirmButtonText: "Cool",
+                });
+              }
+            });
     
         
       
