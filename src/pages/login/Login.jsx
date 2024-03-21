@@ -4,15 +4,19 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../providers/AuthProvider";
 import Header from "../Home/Header/Header";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  
+  const axiosPublic = useAxiosPublic();
   const errorToast = (loginError) =>
     toast.error(loginError, { position: "bottom-center" });
 
   const SuccessToast = (successmsg) =>
     toast.success(successmsg, { position: "bottom-center" });
-  const { signIn,googleSignIn } = useContext(AuthContext);
+  const { user,setUser } = useContext(AuthContext);
  
  
   const handleLogin = (e) => {
@@ -29,39 +33,47 @@ const Login = () => {
       return;
 
     }
+    const userinfo= {
+      email,password
+    
+    }
+  axiosPublic.post("/login",userinfo, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then((response) => {
+      console.log(response.data);
+      if (response.data.message) {
+        Swal.fire({
+          title: "Failed!",
+          text: "Login error",
+          icon: "error",
+          confirmButtonText: "Cool"
+        });
+   
+      }
+      else{
+        setUser(response.data);
 
-    signIn(email, password)
-      .then((result) => {
-        console.log(result.user);
+        console.log("this is from context",user)
+        Swal.fire({
+          title: "Success!",
+          text: "Login successful",
+          icon: "success",
+          confirmButtonText: "Cool"
+        });
+   
 
-      
-        SuccessToast("Successfully logged in !");
-        navigate(location?.state ? location.state : '/dashboard/profile');
-      })
-      .catch((error) => {
-        console.error("this is ", error);
-
-        errorToast(error.message);
-      });
-  };
-
-  const handleGoogleSignin=()=>{
-
-    googleSignIn() .then((result) => {
-      console.log("this is logged in user",result.user);
-
-      
-      SuccessToast("Successfully logged in !");
-
-      navigate(location?.state ? location.state : '/dashboard/profile');
+      }
     })
     .catch((error) => {
-      console.error("this is ", error);
-
-      errorToast(error.message);
+      console.error("Error:", error);
+      // Handle errors if any
     });
 
-  }
+  };
+
   return (
     <div className="">
       <Header></Header>
@@ -107,18 +119,10 @@ const Login = () => {
                   className="input input-bordered"
                   
                 />
-                <label className="flex justify-start mt-2">
-                  {" "}
-                  <p>
-                    New to the web site?
-                    <span className="text-black font-bold underline">
-                      <Link to={"/register"}>Register </Link>
-                    </span>
-                  </p>
-                </label>
+          
               </div>
               <div className="form-control mt-6">
-                <button className="btn bg-black btn-primary border-0 text-white">
+                <button  className="btn bg-black btn-primary border-0 text-white">
                   Login
                 </button>
                
@@ -128,9 +132,7 @@ const Login = () => {
                 </button> */}
             </form> 
             <div className="flex justify-center w-full">
-            <button onClick={handleGoogleSignin} className=" lg:w-[320px] w-[220px] btn mt-1 mb-5  bg-black btn-primary border-0 text-white">
-                  Log In With Google
-                </button>
+         
 
             </div>
            
