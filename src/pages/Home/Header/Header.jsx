@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useContext } from "react";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -13,17 +14,52 @@ console.log("photo url",user?.photoURL);
     .catch(err=>console.log(err));
 
   }
+  const handleAdminCredentials = () => {
+    Swal.fire({
+      icon: "info",
+      title: "Admin Credentials",
+      html: `
+      <div >
+    <p>Admin Email: syed1@gmail.com </p> <p className='pt-5'>Admin Password: Syed123</p>
+      </div>
+    `, showConfirmButton: false,
+      showCloseButton: true,
+      footer: "Log in as admin to explore admin dashboard",
+    });
+    // Swal.fire({
+    //   title: "<strong>Admin Credentials</strong>",
+    //   icon: "info",
+    //   html: `
 
+    //     <div >
+    //   <p>Admin Email: syed@gmail.com </p> <p>   Admin Password: syeD123#</p>
+    // <footer>Log in as admin to explore admin dashboard</footer>
+    //     </div>,
+
+    //   `,
+    //   showCloseButton: true,
+    //   showCancelButton: true,
+    //   focusConfirm: false,
+    //   confirmButtonText: `
+    //     <i class="fa fa-thumbs-up"></i> Great!
+    //   `,
+    //   confirmButtonAriaLabel: "Thumbs up, great!",
+    //   cancelButtonText: `
+    //     <i class="fa fa-thumbs-down"></i>
+    //   `,
+    //   cancelButtonAriaLabel: "Thumbs down"
+    // });
+  };
   const navLinks = (
     <>
       <li className={`${user ?'pt-10':'pt-5' } `} >
         <NavLink to="/">Home</NavLink>
       </li>
       <li className={`${user ?'pt-10':'pt-5' } `}>
-        <NavLink to="/blog">Blogs</NavLink>
+        <NavLink to="/blog">Add Blog</NavLink>
       </li>
       <li className={`${user ?'pt-10':'pt-5' } `}>
-        <NavLink to="/opinion">Opinion</NavLink>
+          <button className="admin-text" onClick={handleAdminCredentials}> Admin</button>
       </li>
 
       <li className={`${user ?'pt-10':'pt-5' } `}>
@@ -89,7 +125,7 @@ console.log("photo url",user?.photoURL);
               <button onClick={handleLogout} className="btn btn-error  border-0 "> Logout</button>
            
           ) : (
-            <Link to={"/login"}><button className="btn border-0   "> Lets Explore</button> </Link> 
+            <Link to={"/login"}><button className="btn border-0   "> Login</button> </Link> 
           )}
         </div>
       </div>
