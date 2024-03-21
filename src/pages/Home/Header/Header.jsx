@@ -37,10 +37,10 @@ console.log("photo url",user?.photoURL);
            
             <div className="rounded-full ">
               <div className="w-12  rounded-full ">
-                <img className="rounded-full" src={user?.photoURL} />
+                <img className="rounded-full" src={user?.photo} />
               </div>
             </div>
-            <p className="font-bold">{user.displayName}</p>
+            <p className="font-bold">{user.name}</p>
           </div>
           }
 
